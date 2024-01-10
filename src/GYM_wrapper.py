@@ -11,11 +11,18 @@ class GymInterface(gym.Env):
         # Action space, observation space
         if RL_ALGORITHM == "PPO":
             # Define action space
-            actionSpace = []
-            for _ in range(len(I)):
-                if I[_]["TYPE"] == "Raw Material":
-                    actionSpace.append(len(ACTION_SPACE))
-            self.action_space = spaces.MultiDiscrete(actionSpace)
+            # Initialize the array for 6 actions (3 for center coordination, 3 for cutting plane angle)
+            actionSize = 6
+            # Create arrays for low and high values.
+            # Use np.concatenate to combine the ranges for the two parts.
+            low = np.concatenate(
+                (np.full(3, ACTION_SPACE_CENTER_COOR_LOW), np.full(3, ACTION_SPACE_CUT_PLANE_ANGLE_LOW)))
+            high = np.concatenate(
+                (np.full(3, ACTION_SPACE_CENTER_COOR_HIGH), np.full(3, ACTION_SPACE_CUT_PLANE_ANGLE_HIGH)))
+            # Define the action space as a Box object.
+            action_space = spaces.Box(low=low, high=high, dtype=np.float32)
+
+            # self.observation_space = spaces.Box(low=0, high=INVEN_LEVEL_MAX, shape=(len(I),), dtype=int)
             # Define observation space:
             os = [INVEN_LEVEL_MAX+1 for _ in range(len(I))]
             if STATE_DEMAND:
