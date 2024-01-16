@@ -11,3 +11,21 @@ def create_env():
     decomposed_parts = []
 
     return PD_env, PD_tree, decomposed_parts
+
+
+def cap_current_state(PD_env, PD_tree, decomposed_parts):
+    # Capture the current state of the PD environment
+    # BUILD ORIENTATION DETERMINATION
+
+    return state
+
+
+def decompose_parts(action):
+
+    return PD_env, PD_tree, decomposed_parts
+
+
+def cal_reward(next_state):
+    # Calculate the reward based on the current state
+
+    return reward

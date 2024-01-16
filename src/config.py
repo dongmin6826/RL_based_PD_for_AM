@@ -1,6 +1,7 @@
 RL_ALGORITHM = "PPO"
 N_EPISODES = 100
 N_EVAL_EPISODES = 10
+MAX_N_PARTS = 20
 
 # Set low and high values for the actions of the center coordination (X, Y, Z)
 ACTION_SPACE_CENTER_COOR_LOW = 0  # unit: mm
