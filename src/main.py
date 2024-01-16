@@ -1,7 +1,6 @@
 from GYM_wrapper import GymInterface
 from config import *
 import numpy as np
-from stable_baselines3.common.evaluation import evaluate_policy
 import time
 if RL_ALGORITHM == "PPO":
     from stable_baselines3 import PPO
@@ -40,15 +39,9 @@ mean_reward, std_reward = evaluate_model(model, env, N_EVAL_EPISODES)
 print(
     f"Mean reward over {N_EVAL_EPISODES} episodes: {mean_reward:.2f} +/- {std_reward:.2f}")
 
-
 end_time = time.time()
 print(f"Computation time: {(end_time - start_time)/3600:.2f} hours")
 
-'''
-# Save and load the trained agent
-model.save("dqn_inventory")
-loaded_model = DQN.load("dqn_inventory")
-'''
 
 # TensorBoard 실행:
 # tensorboard --logdir="C:/tensorboard_logs/"
