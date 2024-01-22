@@ -2,8 +2,7 @@ from GYM_wrapper import GymInterface
 from config import *
 import numpy as np
 import time
-if RL_ALGORITHM == "PPO":
-    from stable_baselines3 import PPO
+from stable_baselines3 import PPO  # DDPG
 
 # Create environment
 env = GymInterface()
@@ -29,8 +28,7 @@ def evaluate_model(model, env, num_episodes):
 
 # Train the agent
 start_time = time.time()
-if RL_ALGORITHM == "PPO":
-    model = PPO("MlpPolicy", env, verbose=0)
+model = PPO("MlpPolicy", env, verbose=0)
 model.learn(total_timesteps=N_EPISODES)  # Time steps = episodes in our case
 env.render()  # Render the environment to see how well it performs
 
