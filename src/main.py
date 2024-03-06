@@ -11,6 +11,7 @@ env = GymInterface()
 
 
 def evaluate_model(model, env, num_episodes):
+    #    env = GymInterface()
     all_rewards = []
     for _ in range(num_episodes):
         obs = env.reset()
@@ -23,20 +24,24 @@ def evaluate_model(model, env, num_episodes):
         all_rewards.append(episode_reward)
     mean_reward = np.mean(all_rewards)
     std_reward = np.std(all_rewards)
+    for x in range(len(env.decomposed_parts)):
+        mesh = env.PD_tree[env.decomposed_parts[x]]["Mesh"]
+        mesh.export(f'./Resulted_Stl/{env.decomposed_parts[x]}.stl')
     return mean_reward, std_reward
 
 
 # Train the agent
 start_time = time.time()
-model = PPO("MlpPolicy", env, verbose=0)
+model = PPO("MlpPolicy", env, verbose=0, device='cuda')
 model.learn(total_timesteps=N_EPISODES)  # Time steps = episodes in our case
+model.save("./Saved_RL_Models/PPO")
 env.render()  # Render the environment to see how well it performs
+
 
 # Evaluate the trained agent
 mean_reward, std_reward = evaluate_model(model, env, N_EVAL_EPISODES)
 print(
     f"Mean reward over {N_EVAL_EPISODES} episodes: {mean_reward:.2f} +/- {std_reward:.2f}")
-
 end_time = time.time()
 print(f"Computation time: {(end_time - start_time)/3600:.2f} hours")
 
