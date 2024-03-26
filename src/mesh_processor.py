@@ -2,21 +2,21 @@ import trimesh
 import numpy as np
 import pyvista as pv
 
-
 class MeshProcessor:
-    def __init__(self, mesh_path):
-        self.mesh_path = mesh_path
+    
+    def load_mesh(self,mesh_path):
+        mesh_path = mesh_path
         self.mesh = trimesh.load(mesh_path)
 
     def reverse_plane_normal(self, plane_normal):
         return [-x for x in plane_normal]
 
-    def trimesh_cut(self, plane_point, plane_normal):
+    def trimesh_cut(self, mesh, plane_point, plane_normal):
         reverse_plane = self.reverse_plane_normal(plane_normal)
 
-        sliced_mesh_one = self.mesh.slice_plane(
+        sliced_mesh_one = mesh.slice_plane(
             plane_origin=plane_point, plane_normal=plane_normal, cap=True)
-        sliced_mesh_theother = self.mesh.slice_plane(
+        sliced_mesh_theother = mesh.slice_plane(
             plane_origin=plane_point, plane_normal=reverse_plane, cap=True)
 
         meshes_one = sliced_mesh_one.split()
